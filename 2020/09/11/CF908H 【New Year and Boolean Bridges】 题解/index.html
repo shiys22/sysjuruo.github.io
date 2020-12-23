@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="设 $f(i,j)$ 表示 $i$ 是否能直接或间接到达 $j$。 给定一个 $n\times n$ 的矩阵 $G$，求满足以下条件的有向图的最小边数：  若 $G_{i,j}&#x3D;\mathsf{A}$，则要求 $f(i,j) \operatorname{and} f(j,i)&#x3D;1$。 若 $G_{i,j}&#x3D;\mathsf{O}$，则要求 $f(i,j) \operatorname{or} f(j,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CF908H 【New Year and Boolean Bridges】 题解">
+<meta property="og:url" content="http://yoursite.com/2020/09/11/CF908H%20%E3%80%90New%20Year%20and%20Boolean%20Bridges%E3%80%91%20%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="sys.&#39;s blog">
+<meta property="og:description" content="设 $f(i,j)$ 表示 $i$ 是否能直接或间接到达 $j$。 给定一个 $n\times n$ 的矩阵 $G$，求满足以下条件的有向图的最小边数：  若 $G_{i,j}&#x3D;\mathsf{A}$，则要求 $f(i,j) \operatorname{and} f(j,i)&#x3D;1$。 若 $G_{i,j}&#x3D;\mathsf{O}$，则要求 $f(i,j) \operatorname{or} f(j,">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-11T14:44:41.000Z">
+<meta property="article:modified_time" content="2020-12-23T09:44:11.055Z">
+<meta property="article:author" content="sys.">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/11/CF908H%20%E3%80%90New%20Year%20and%20Boolean%20Bridges%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>CF908H 【New Year and Boolean Bridges】 题解 | sys.'s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sys.'s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">3570912140@qq.com</p>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/11/CF908H%20%E3%80%90New%20Year%20and%20Boolean%20Bridges%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CF908H 【New Year and Boolean Bridges】 题解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-11 22:44:41" itemprop="dateCreated datePublished" datetime="2020-09-11T22:44:41+08:00">2020-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 17:44:11" itemprop="dateModified" datetime="2020-12-23T17:44:11+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>设 $f(i,j)$ 表示 $i$ 是否能直接或间接到达 $j$。</p>
+<p>给定一个 $n\times n$ 的矩阵 $G$，求满足以下条件的有向图的最小边数：</p>
+<ul>
+<li>若 $G_{i,j}=\mathsf{A}$，则要求 $f(i,j) \operatorname{and} f(j,i)=1$。</li>
+<li>若 $G_{i,j}=\mathsf{O}$，则要求 $f(i,j) \operatorname{or} f(j,i)=1$。</li>
+<li>若 $G_{i,j}=\mathsf{X}$，则要求 $f(i,j) \operatorname{xor} f(j,i)=1$。</li>
+</ul>
+<p>$n\leq 47$。</p>
+<a id="more"></a>
+<p>不得不说，这真的是一道好题啊！！！！</p>
+<p>我们考虑，若 $(i, j)$ 的限制为 $A$，则 $(i, j)$ 肯定是强连通的。显然，若 $(i, j)$ 和 $(j, k)$ 的限制都为 $A$，则 $(i, k)$ 也是强连通的。</p>
+<p>所以我们把他们看作一个个连通块。一个连通块 $E’$ 就是一个强连通分量。我们至少要用 $|E’|$ 条边使得他们强连通（比如，连一个大环）。</p>
+<p>由于对于每一对点都有至少一个限制，所以连通块与连通块间还需要单向连通。</p>
+<p>对于两个连通块 $E_1, E_2$ 之间，若存在限制 $X$，则 $E_1, E_2$ 必然为单向联通，若全为 $O$，则可以单向联通也可以强连通。</p>
+<p>对于大小 $\geq 2$ 的连通块，单向联通花费（$|E_1|+|E_2|+1$）比强连通花费更多。所以我们要考虑把尽可能多的单向联通转化为强连通。</p>
+<p>而大小为 $1$ 的连通块，两种花费相同，也就没有了决策，直接把答案加上即可。</p>
+<p>大小 $\geq 2$ 的连通块最多只有 $\frac n2$ 个。我们考虑状压，之后考虑每次将一个强连通分量加进去。</p>
+<p>设 $f_S$ 表示 $S$ 中的元素是否能构成一整个强连通分量。</p>
+<p>设全集为 $T$。</p>
+<p>则这部分答案为 $\min\{k|[T]f^k\neq 0\}$，其中乘法为子集卷积。</p>
+<p>即最小的 $k$ 满足 $T$ 能拆分成 $k$ 个部分 $\{S_1, S_2, \ldots, S_k\}$，使得 $f_{T} \neq 0$。</p>
+<p>直接实现复杂度会非常高。</p>
+<p>我们这时候发现，实际上并不需要用子集卷积。因为若 $S_1$ 和 $S_2$ 有交，也能说明 $S_1\cup S_2$ 能缩成两个强连通分量（有交实际上是更强的一个条件）。</p>
+<p>我们又发现，我们只需要求 $f^k_{T}$ 的值，并不需要每次都 $\text{IFWT}$ 回来，只需要考虑每一个位置在 $\text{IFWT}$ 时对 $T$ 这个位置的贡献就好了，经过简单推导即可得到结论（结论见代码）。</p>
+<p>时间复杂度：$O(n2^{\frac n2})$。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Maxn = <span class="number">53</span>, p = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> n, ct, ans, maxi, fa[Maxn], id[Maxn], siz[Maxn];</span><br><span class="line"><span class="built_in">string</span> G[Maxn];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> w[<span class="number">1</span> &lt;&lt; <span class="number">23</span> | <span class="number">5</span>], f[<span class="number">1</span> &lt;&lt; <span class="number">23</span> | <span class="number">5</span>], g[<span class="number">1</span> &lt;&lt; <span class="number">23</span> | <span class="number">5</span>];</span><br><span class="line"><span class="keyword">bool</span> M[Maxn][Maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FWT</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> now[], <span class="keyword">int</span> len, <span class="keyword">bool</span> type = <span class="literal">false</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i &lt;&lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j += (i &lt;&lt; <span class="number">1</span>))</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = j; k &lt; i + j; k++)</span><br><span class="line">				now[i + k] += type ? p - now[k] : now[k];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) now[i] %= p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_fa</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x == fa[x] ? x : fa[x] = get_fa(fa[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = get_fa(x), b = get_fa(y);</span><br><span class="line">	<span class="keyword">if</span> (a != b)</span><br><span class="line">	&#123;</span><br><span class="line">		fa[a] = b;</span><br><span class="line">		siz[b] += siz[a];</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) fa[i] = i, siz[i] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">string</span> tmp;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; tmp;</span><br><span class="line">		G[i] = <span class="string">' '</span> + tmp;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="keyword">if</span> (G[i][j] == <span class="string">'A'</span>) merge(i, j);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="keyword">if</span> (get_fa(i) == get_fa(j) &amp;&amp; G[i][j] == <span class="string">'X'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">"-1"</span>);</span><br><span class="line">				<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">if</span> (get_fa(i) == i &amp;&amp; siz[i] != <span class="number">1</span>) id[i] = ct++, ans += siz[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (get_fa(i) == i) ans++;</span><br><span class="line">	<span class="keyword">if</span> (!ct)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, ans - <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// siz 全 1 要特判。 </span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="keyword">if</span> (G[i][j] == <span class="string">'X'</span> &amp;&amp; siz[get_fa(i)] &gt; <span class="number">1</span> &amp;&amp; siz[get_fa(j)] &gt; <span class="number">1</span>) M[id[get_fa(i)]][id[get_fa(j)]] = <span class="literal">true</span>; </span><br><span class="line">	<span class="comment">// 易错，仔细想想为什么要加 siz[get_fa(i)] &gt; 1 &amp;&amp; siz[get_fa(j)] &gt; 1。 </span></span><br><span class="line">	maxi = <span class="number">1</span> &lt;&lt; ct;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ct; i++) f[<span class="number">1</span> &lt;&lt; i] = <span class="literal">true</span>; </span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; maxi; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!f[i]) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; ct; j++)</span><br><span class="line">			<span class="keyword">if</span> (!(i &amp; (<span class="number">1</span> &lt;&lt; j)))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; ct; k++)</span><br><span class="line">					<span class="keyword">if</span> ((i &amp; (<span class="number">1</span> &lt;&lt; k)) &amp;&amp; M[j][k]) <span class="keyword">goto</span> END;</span><br><span class="line">				f[i ^ (<span class="number">1</span> &lt;&lt; j)] = <span class="number">1</span>;</span><br><span class="line">				END:;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxi; i++)</span><br><span class="line">		w[i] = ((ct - __builtin_popcount(i)) &amp; <span class="number">1</span>) ? p - <span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">	<span class="comment">// 这是那个结论。 </span></span><br><span class="line">	FWT(f, maxi);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxi; i++) g[i] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> tmp = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; maxi; j++)</span><br><span class="line">			(g[j] *= f[j]) %= p, (tmp += w[j] * g[j]) %= p;</span><br><span class="line">		<span class="keyword">if</span> (tmp)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>, ans + i);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/04/%E6%B4%9B%E8%B0%B7%20P6690%20%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/" rel="prev" title="洛谷 P6690 一次函数 题解">
+      <i class="fa fa-chevron-left"></i> 洛谷 P6690 一次函数 题解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/03/CF1336F%20%E3%80%90Journey%E3%80%91%20%E9%A2%98%E8%A7%A3/" rel="next" title="CF1299D 【Around the world】 题解">
+      CF1299D 【Around the world】 题解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sys.</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sys.</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+        loader: {
+          load: ['[tex]/mhchem']
+        },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

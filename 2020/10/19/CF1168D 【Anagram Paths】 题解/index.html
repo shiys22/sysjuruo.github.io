@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="给出一个有根二叉树，每一条边上都有一个小写字母或 ?。 称一个根到叶子的路径上的字母组成的字符串和这个叶子相关联。如果有一种方案把每个问号换成一个小写字母，使得所有叶子关联的字符串两两之间互相是对方的重新排列，那么称这棵树是可重排的。 如果一棵树是可重排的，那么某个字母 c 的重排度 $f(c)$ 定义为在所有使树重排的问号赋值方案中，c 在任何一个关联串中出现次数的最大值。 如果设 $id(c)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CF1168D 【Anagram Paths】 题解">
+<meta property="og:url" content="http://yoursite.com/2020/10/19/CF1168D%20%E3%80%90Anagram%20Paths%E3%80%91%20%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="sys.&#39;s blog">
+<meta property="og:description" content="给出一个有根二叉树，每一条边上都有一个小写字母或 ?。 称一个根到叶子的路径上的字母组成的字符串和这个叶子相关联。如果有一种方案把每个问号换成一个小写字母，使得所有叶子关联的字符串两两之间互相是对方的重新排列，那么称这棵树是可重排的。 如果一棵树是可重排的，那么某个字母 c 的重排度 $f(c)$ 定义为在所有使树重排的问号赋值方案中，c 在任何一个关联串中出现次数的最大值。 如果设 $id(c)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-19T14:31:26.000Z">
+<meta property="article:modified_time" content="2020-12-23T09:50:51.315Z">
+<meta property="article:author" content="sys.">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/19/CF1168D%20%E3%80%90Anagram%20Paths%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>CF1168D 【Anagram Paths】 题解 | sys.'s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sys.'s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">3570912140@qq.com</p>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/19/CF1168D%20%E3%80%90Anagram%20Paths%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CF1168D 【Anagram Paths】 题解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-19 22:31:26" itemprop="dateCreated datePublished" datetime="2020-10-19T22:31:26+08:00">2020-10-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 17:50:51" itemprop="dateModified" datetime="2020-12-23T17:50:51+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>给出一个有根二叉树，每一条边上都有一个小写字母或 <code>?</code>。</p>
+<p>称一个根到叶子的路径上的字母组成的字符串和这个叶子<strong>相关联</strong>。如果有一种方案把每个问号换成一个小写字母，使得所有叶子关联的字符串两两之间互相是对方的<strong>重新排列</strong>，那么称这棵树是<strong>可重排的</strong>。</p>
+<p>如果一棵树是<strong>可重排的</strong>，那么某个字母 <code>c</code> 的<strong>重排度</strong> $f(c)$ 定义为在所有使树重排的问号赋值方案中，<code>c</code> 在任何一个关联串中出现次数的最大值。</p>
+<p>如果设 $id(c)$ 是字母 $c$ 的标号，即 $id(\texttt{‘a’})=1,id(\texttt{‘b’})=2$……，那么整棵树的<strong>重排度</strong>是</p>
+<script type="math/tex; mode=display">\sum_{c}f(c)id(c)</script><p>给出 $Q$ 次操作，每次操作替换一条边上的字符，求操作后，树是否<strong>可重排</strong>。如果<strong>可重排</strong>，输出它的<strong>重排度</strong>。</p>
+<p>$n, q \leq 1.5\times 10^5$。</p>
+<a id="more"></a>
+<p>首先，很显然地，叶子的深度必须相同。</p>
+<p>在这个条件下，有解当且仅当</p>
+<script type="math/tex; mode=display">\forall u, \sum_{i=0}^{c} \text{maxi}_{u, i}\leq d-\text{dep}_u</script><p>其中，$\text{maxi}_{u, i}$ 表示以 $u$ 号点为起点向下的所有链中，第 $i$ 种字符最多为多少。$c$ 为字符集大小，$d$ 为叶子深度，$\text{dep}_u$ 为 $u$ 号点的深度。</p>
+<p>必要性是显然的。</p>
+<p>充分性可以考虑，我们假如让每一个子树都已经满足了条件，那么就可以把子树看作一条链（因为集合与个数都是一样的），这样我们考虑 $u$ 子树的时候，只用考虑两条在 $u$ 分叉的链如何解决。这个问题就非常简单了。除此之外，我们还得到了一条结论：最终答案中的一部分应该是 $(d-\sum \text{maxi}_{1, i})(1+2+\ldots +26)$。</p>
+<p>现在，我们考虑修改该怎么处理。</p>
+<p>我们思考，若一条边修改了权值，那么他的祖先们的 $\text{maxi}$ 值应该修改，其他点不需要修改。</p>
+<p>我们可以用动态 dp 解决这个问题。</p>
+<p>当然，有更容易的做法。</p>
+<p>我们发现，假如树的一个部分形如一条链，其实我们可以把链缩成一条边，之后每次 $O(c)$ 计算。</p>
+<p>也就是说，我们现在把原树变成了包含所有叶子的虚树。</p>
+<p>有结论：此时的树高不会超过 $O(\sqrt n)$。</p>
+<p>我们考虑在虚树上一条长为 $l$ 的链，要满足虚树的性质，就必须要在每个节点再深出一条枝干，又因为要求所有叶子的深度相同，所以枝干长度必须足够长。最终，我们需要 $O(l^2)$ 个点才能使这样一条虚树上的链存在。</p>
+<p>于是我们建出虚树，在这个虚树上暴跳，维护 $\text{maxi}$ 值即可。</p>
+<p>时间复杂度：$O(cn\sqrt n)$。</p>
+<p>代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Maxn = <span class="number">300005</span>;</span><br><span class="line"><span class="keyword">int</span> n, q, cnt, err, maxi, fa[Maxn], dep[Maxn], opt[Maxn], down[Maxn], head[Maxn], ct[Maxn][<span class="number">29</span>], f[Maxn][<span class="number">29</span>];</span><br><span class="line"><span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; Ve, G[Maxn];</span><br><span class="line"><span class="keyword">bool</span> vis[Maxn];</span><br><span class="line"><span class="keyword">char</span> ch[Maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edg</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> nxt, to;</span><br><span class="line">&#125; edge[Maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	edge[++cnt] = (edg)&#123;head[x], y&#125;;</span><br><span class="line">	head[x] = cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_dfs</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	maxi = max(maxi, dep[u]);</span><br><span class="line">	<span class="keyword">if</span> (!G[u].size() &amp;&amp; dep[u] != maxi)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (q--) <span class="built_in">puts</span>(<span class="string">"Fou"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (G[u].size() != <span class="number">1</span> || u == <span class="number">1</span>) vis[u] = <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = G[u].begin(); it != G[u].end(); it++)</span><br><span class="line">		dep[*it] = dep[u] + <span class="number">1</span>, init_dfs(*it);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs1</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Ve.push_back(u);</span><br><span class="line">	<span class="keyword">if</span> (vis[u])</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve.begin(); it != Ve.end(); it++)</span><br><span class="line">			down[*it] = u;</span><br><span class="line">		Ve.clear();</span><br><span class="line">		<span class="keyword">if</span> (f) add(f, u);</span><br><span class="line">		f = u;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = G[u].begin(); it != G[u].end(); it++)</span><br><span class="line">		dfs1(*it, f);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = head[u]; i; i = edge[i].nxt)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> to = edge[i].to;</span><br><span class="line">		fa[to] = u, dfs2(to);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++)</span><br><span class="line">			f[u][j] = max(f[u][j], f[to][j] + ct[to][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) sum += f[u][i];</span><br><span class="line">	<span class="keyword">if</span> (sum &gt; maxi - dep[u]) err++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">work</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!u) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)</span><br><span class="line">		sum += f[u][i];</span><br><span class="line">	<span class="keyword">if</span> (sum &gt; maxi - dep[u]) err--;</span><br><span class="line">	<span class="built_in">memset</span>(f[u], <span class="number">0</span>, <span class="keyword">sizeof</span>(f[u]));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = head[u]; i; i = edge[i].nxt)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> to = edge[i].to;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++)</span><br><span class="line">			f[u][j] = max(f[u][j], f[to][j] + ct[to][j]);</span><br><span class="line">	&#125;</span><br><span class="line">	sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) sum += f[u][i];</span><br><span class="line">	<span class="keyword">if</span> (sum &gt; maxi - dep[u]) err++;</span><br><span class="line">	work(fa[u]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;q);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">		G[x].push_back(i);</span><br><span class="line">		ch[i] = getchar();</span><br><span class="line">		<span class="keyword">while</span> (!<span class="built_in">isalpha</span>(ch[i]) &amp;&amp; ch[i] != <span class="string">'?'</span>) ch[i] = getchar();</span><br><span class="line">	&#125;</span><br><span class="line">	init_dfs(<span class="number">1</span>);</span><br><span class="line">	dfs1(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">	dfs2(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">		ct[down[i]][ch[i] - <span class="string">'a'</span>]++;</span><br><span class="line">	<span class="keyword">while</span> (q--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">		<span class="keyword">if</span> (ch[x] != <span class="string">'?'</span>) ct[down[x]][ch[x] - <span class="string">'a'</span>]--;</span><br><span class="line">		ch[x] = getchar();</span><br><span class="line">		<span class="keyword">while</span> (!<span class="built_in">isalpha</span>(ch[x]) &amp;&amp; ch[x] != <span class="string">'?'</span>) ch[x] = getchar();</span><br><span class="line">		<span class="keyword">if</span> (ch[x] != <span class="string">'?'</span>) ct[down[x]][ch[x] - <span class="string">'a'</span>]++;</span><br><span class="line">		work(fa[down[x]]);</span><br><span class="line">		<span class="keyword">if</span> (err) <span class="built_in">puts</span>(<span class="string">"Fou"</span>);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">long</span> <span class="keyword">long</span> tot = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)</span><br><span class="line">				sum += f[<span class="number">1</span>][i];</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++)</span><br><span class="line">				tot += (maxi - sum + f[<span class="number">1</span>][i]) * (i + <span class="number">1L</span>L);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Shi %lld\n"</span>, tot);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/19/CF750H%20%E3%80%90New%20Year%20and%20Snowy%20Grid%E3%80%91%20%E9%A2%98%E8%A7%A3/" rel="prev" title="CF750H 【New Year and Snowy Grid】 题解">
+      <i class="fa fa-chevron-left"></i> CF750H 【New Year and Snowy Grid】 题解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/20/CF1129D%20%E3%80%90Isolation%E3%80%91%20%E9%A2%98%E8%A7%A3/" rel="next" title="CF1129D 【Isolation】 题解">
+      CF1129D 【Isolation】 题解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sys.</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sys.</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+        loader: {
+          load: ['[tex]/mhchem']
+        },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

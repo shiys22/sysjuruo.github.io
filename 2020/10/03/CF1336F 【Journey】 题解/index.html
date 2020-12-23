@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="给定一棵树和 $m$ 条链，求多少对链的交中包含的边数 $\geq k$。 $n, m\leq 1.5\times 10^5$。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CF1299D 【Around the world】 题解">
+<meta property="og:url" content="http://yoursite.com/2020/10/03/CF1336F%20%E3%80%90Journey%E3%80%91%20%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="sys.&#39;s blog">
+<meta property="og:description" content="给定一棵树和 $m$ 条链，求多少对链的交中包含的边数 $\geq k$。 $n, m\leq 1.5\times 10^5$。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/04/17/62LMAbsKlgzwcSq.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/17/d9bnVfKIF3LoyGB.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/17/fMFSq7ialm8RDC5.png">
+<meta property="article:published_time" content="2020-10-03T02:05:28.000Z">
+<meta property="article:modified_time" content="2020-12-23T09:43:51.520Z">
+<meta property="article:author" content="sys.">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/17/62LMAbsKlgzwcSq.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/03/CF1336F%20%E3%80%90Journey%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>CF1299D 【Around the world】 题解 | sys.'s blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sys.'s blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">3570912140@qq.com</p>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/03/CF1336F%20%E3%80%90Journey%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CF1299D 【Around the world】 题解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-03 10:05:28" itemprop="dateCreated datePublished" datetime="2020-10-03T10:05:28+08:00">2020-10-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 17:43:51" itemprop="dateModified" datetime="2020-12-23T17:43:51+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>给定一棵树和 $m$ 条链，求多少对链的交中包含的边数 $\geq k$。</p>
+<p>$n, m\leq 1.5\times 10^5$。</p>
+<a id="more"></a>
+<p>我们将答案分成三部分进行统计。</p>
+<p>设当前考虑的两条链为 $A, B$，四个端点为 $s_A, s_B, t_A, t_B$，保证 $dfn_s &lt; dfn_t$。$l_A=\mathrm{lca}(s_A, t_A), l_B=\mathrm{lca}(s_B, t_B)$。</p>
+<ol>
+<li><p>$l_A\neq l_B$</p>
+<p>若 $l_A,l_B$ 不是祖先后代关系，交集肯定为 $0$。</p>
+<p>假设 $l_A$ 是 $l_B$ 的祖先。则交集为以 $l_B$ 为一端的向下的一条链。</p>
+<p> <img src="https://i.loli.net/2020/04/17/62LMAbsKlgzwcSq.png" alt="62LMAbsKlgzwcSq.png (431×426) (loli.net)"></p>
+<p> 在这张图中，两条链为 $(\texttt{E}, \texttt{F}), (\texttt{G}, \texttt{H})$。交集为紫色边，可以发现他是 $l_B$ 向下的一条链。</p>
+<p> 我们在 $l_B$ 处，向 $s_B$ 走 $k$ 步到达点 $h1_B$，向 $t_B$ 走 $k$ 步到达 $h2_B$，则 $A$ 必须满足：$l_A$ 是 $l_B$ 的祖先，且存在链上的点在 $h1_B$ 的子树内或 $h2_B$ 的子树内。</p>
+<p> 我们 dfs 整棵树，在 $h1_B$ 和 $h2_B$ 处做子树加，之后在 $s_A$ 和 $t_A$ 处查询。</p>
+<p> 有没有可能一对链被计算了两遍呢？仔细想想，如果被记了两遍，那可以推出 $l_A=l_B$，显然我们已经保证了这不存在。</p>
+</li>
+<li><p>$l_A=l_B$</p>
+<p> <img src="https://i.loli.net/2020/04/17/d9bnVfKIF3LoyGB.png" alt="d9bnVfKIF3LoyGB.png (456×324) (loli.net)"></p>
+<p> 先不考虑时间复杂度问题。我们考虑枚举 $l_A$，再枚举 $L=\mathrm{lca}(s_A, s_B)$，从 $L$ 处开始，在链上向 $t_A$ 爬 $k$ 步到 $p$，此时合法的 $B$ 都在 $p$ 的子树内。</p>
+<p> 在这张图中，两条链为 $(\texttt{B}, \texttt{E}), (\texttt{C}, \texttt{F})$，$L$ 在 $\texttt{A}$ 点，向 $\texttt{E}$ 点爬 $k$ 步后爬到了 $\texttt{D}$，此时查询 $\texttt{D}$ 的子树有多少个 $t_B$，并且 $\mathrm{lca}(s_A, s_B) = L$ 即可。</p>
+<p> 如何查询一个子树内，$t$ 在另一个子树内的链个数？可以用线段树合并。</p>
+<p> 怎么爬 $k$ 步？倍增就行。</p>
+<p> 怎么枚举两个 $\texttt{lca}$？枚举 $l_A$，对所有满足的链建虚树。</p>
+<p> 怎么枚举 $A$？启发式合并，枚举小的那一堆即可。</p>
+<p> <del>真难写…</del></p>
+</li>
+<li><p>$l_A=l_B$ 的特殊情况</p>
+<p> 在上一种情况中，我们默认了 $s_A, s_B$ 在 $l_A$ 的一边，$t_A, t_B$ 在另一边。</p>
+<p> 但是这样会漏掉一种情况。</p>
+<p> <img src="https://i.loli.net/2020/04/17/fMFSq7ialm8RDC5.png" alt="fMFSq7ialm8RDC5.png (314×334) (loli.net)"></p>
+<p> 如果 $s_A, t_B$ 在一边，$s_B, t_A$ 在一边？</p>
+<p> 可以发现，这种情况下交集是从 $l_A$ 向下的一条链。</p>
+<p> 我们枚举 $l_A$，向 $t_A$ 爬 $k$ 步，再在 $s_B$ 查询。</p>
+<p> 在这张图中，$dfn_A &lt; dfn_B &lt; dfn_C$，在这种情况下，$s_A=\texttt{A},s_B=\texttt{D}$。我们从 $\texttt{X}$ 向 $\texttt{E}$ 爬 $k$ 步到 $\texttt{B}$，给 $\texttt{B}$ 做子树加。再在 $\texttt{D}$ 处查询。</p>
+<p> 这种情况，我们直接借上一种情况的启发式合并一起来做就行了。</p>
+<p> 会不会和第二种情况重复计数？显然不会。爬过来后肯定要么是 $s_B$（第三种情况），要么是 $t_B$（第二种情况），总不可能两个都在。</p>
+</li>
+</ol>
+<p>时间复杂度：$O((m\log m+n)\log n)$。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Maxn = <span class="number">300005</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, k, ct, cnt, dfn_cnt, tree_ct, time_now, top, sum2[Maxn], siz[Maxn], node[Maxn], dep[Maxn], head[Maxn], sta[Maxn], dfn[Maxn], Time[Maxn], s[Maxn], t[Maxn], h1[Maxn], h2[Maxn], rt[Maxn], sum1[Maxn], vt_anc[Maxn][<span class="number">20</span>], anc[Maxn][<span class="number">20</span>];</span><br><span class="line"><span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; Vt, E[Maxn], Ve[Maxn], V[Maxn];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> ans;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edg</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> nxt, to;</span><br><span class="line">&#125; edge[<span class="number">2</span> * Maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	edge[++cnt] = (edg)&#123;head[x], y&#125;;</span><br><span class="line">	head[x] = cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs1</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> fa)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	siz[u] = <span class="number">1</span>;</span><br><span class="line">	anc[u][<span class="number">0</span>] = fa;</span><br><span class="line">	dep[u] = dep[fa] + <span class="number">1</span>;</span><br><span class="line">	dfn[u] = ++dfn_cnt;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = head[u]; i; i = edge[i].nxt)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> to = edge[i].to;</span><br><span class="line">		<span class="keyword">if</span> (to != fa) dfs1(to, u), siz[u] += siz[to];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; (<span class="number">1</span> &lt;&lt; j) &lt;= n; j++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">			anc[i][j] = anc[anc[i][j - <span class="number">1</span>]][j - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (dep[x] &lt; dep[y]) swap(x, y);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">19</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		<span class="keyword">if</span> ((dep[x] - dep[y]) &amp; (<span class="number">1</span> &lt;&lt; i)) x = anc[x][i];</span><br><span class="line">	<span class="keyword">if</span> (x == y) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">19</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		<span class="keyword">if</span> (anc[x][i] != anc[y][i]) x = anc[x][i], y = anc[y][i];</span><br><span class="line">	<span class="keyword">return</span> anc[x][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_dis</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> dep[x] + dep[y] - <span class="number">2</span> * dep[lca(x, y)];</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tree</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> lson, rson, cnt;</span><br><span class="line">&#125; tree[<span class="number">60</span> * Maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> lt, <span class="keyword">int</span> rt, <span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (lt + <span class="number">1</span> == rt)</span><br><span class="line">		tree[root].cnt++;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (lt + rt) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (pos &gt;= mid)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (!tree[root].rson)</span><br><span class="line">			&#123;</span><br><span class="line">				tree[root].rson = ++tree_ct;</span><br><span class="line">				tree[tree[root].rson] = (Tree)&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">			insert(tree[root].rson, mid, rt, pos);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (!tree[root].lson)</span><br><span class="line">			&#123;</span><br><span class="line">				tree[root].lson = ++tree_ct;</span><br><span class="line">				tree[tree[root].lson] = (Tree)&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">			insert(tree[root].lson, lt, mid, pos);</span><br><span class="line">		&#125;</span><br><span class="line">		tree[root].cnt = tree[tree[root].lson].cnt + tree[tree[root].rson].cnt;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> root1, <span class="keyword">int</span> root2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root1 || !root2) <span class="keyword">return</span> root1 + root2;</span><br><span class="line">	<span class="keyword">int</span> new_node = ++tree_ct;</span><br><span class="line">	tree[new_node] = (Tree)&#123;merge(tree[root1].lson, tree[root2].lson), merge(tree[root1].rson, tree[root2].rson)&#125;;</span><br><span class="line">	tree[new_node].cnt = tree[root1].cnt + tree[root2].cnt;</span><br><span class="line">	<span class="keyword">return</span> new_node;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ask</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> lt, <span class="keyword">int</span> rt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (L == lt &amp;&amp; R == rt) <span class="keyword">return</span> tree[root].cnt;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (L + R) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (lt &gt;= mid) <span class="keyword">return</span> ask(tree[root].rson, mid, R, lt, rt);</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (rt &lt;= mid) <span class="keyword">return</span> ask(tree[root].lson, L, mid, lt, rt);</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">return</span> ask(tree[root].lson, L, mid, lt, mid) + ask(tree[root].rson, mid, R, mid, rt);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vt_build</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	time_now++;</span><br><span class="line">	tree_ct = ct = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">		node[++ct] = s[*it], node[++ct] = t[*it];</span><br><span class="line">	sort(node + <span class="number">1</span>, node + <span class="number">1</span> + ct, [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)&#123;<span class="keyword">return</span> dfn[x] &lt; dfn[y];&#125;);</span><br><span class="line">	ct = unique(node + <span class="number">1</span>, node + <span class="number">1</span> + ct) - node - <span class="number">1</span>;</span><br><span class="line">	top = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (node[<span class="number">1</span>] != u) E[u].clear(), rt[u] = ++tree_ct, tree[rt[u]] = (Tree)&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, V[u].clear(), Time[u] = time_now, sta[++top] = u;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= ct; i++)</span><br><span class="line">		E[node[i]].clear(), rt[node[i]] = ++tree_ct, tree[rt[node[i]]] = (Tree)&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, V[node[i]].clear(), Time[node[i]] = time_now;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= ct; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!top)</span><br><span class="line">		&#123;</span><br><span class="line">			sta[++top] = node[i];</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> l = lca(sta[top], node[i]);</span><br><span class="line">		<span class="keyword">if</span> (Time[l] != time_now) Time[l] = time_now, rt[l] = ++tree_ct, tree[rt[l]] = (Tree)&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;, V[l].clear(), E[l].clear();</span><br><span class="line">		<span class="keyword">while</span> (top &gt; <span class="number">1</span> &amp;&amp; dep[sta[top - <span class="number">1</span>]] &gt; dep[l]) E[sta[top - <span class="number">1</span>]].push_back(sta[top]), top--;</span><br><span class="line">		<span class="keyword">if</span> (dep[l] &lt; dep[sta[top]]) E[l].push_back(sta[top]), top--;</span><br><span class="line">		<span class="keyword">if</span> (!top || sta[top] != l) sta[++top] = l;</span><br><span class="line">		sta[++top] = node[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (top &gt; <span class="number">1</span>) E[sta[top - <span class="number">1</span>]].push_back(sta[top]), top--;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">		insert(rt[s[*it]], <span class="number">1</span>, n + <span class="number">1</span>, dfn[t[*it]]), V[s[*it]].push_back(*it);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vt_dfs1</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Vt.push_back(u);</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = E[u].begin(); it != E[u].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		vt_anc[*it][<span class="number">0</span>] = u;</span><br><span class="line">		vt_dfs1(*it);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vt_init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; (<span class="number">1</span> &lt;&lt; j) &lt;= n; j++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Vt.begin(); it != Vt.end(); it++)</span><br><span class="line">			vt_anc[*it][j] = vt_anc[vt_anc[*it][j - <span class="number">1</span>]][j - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">jump1</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> dis)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (dis &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> v = u;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">19</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		<span class="keyword">if</span> (dep[u] - dep[vt_anc[v][i]] &lt;= dis &amp;&amp; vt_anc[v][i]) v = vt_anc[v][i];</span><br><span class="line">	<span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">jump2</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> dis)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (dis &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> v = u;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">19</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		<span class="keyword">if</span> (dep[u] - dep[anc[v][i]] &lt;= dis &amp;&amp; anc[v][i]) v = anc[v][i];</span><br><span class="line">	<span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cal1</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> u, <span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = V[v].begin(); it != V[v].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now = jump1(t[*it], get_dis(l, t[*it]) - k);</span><br><span class="line">		<span class="keyword">if</span> (now)</span><br><span class="line">			ans += ask(rt[u], <span class="number">1</span>, n + <span class="number">1</span>, dfn[now], dfn[now] + siz[now]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cal2</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> tmp_ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = V[u].begin(); it != V[u].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now = jump1(t[*it], get_dis(u, t[*it]) - k);</span><br><span class="line">		<span class="keyword">if</span> (now)</span><br><span class="line">			tmp_ans += ask(rt[u], <span class="number">1</span>, n + <span class="number">1</span>, dfn[now], dfn[now] + siz[now]) - <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	ans += tmp_ans / <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vt_dfs2</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cal2(u);</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it1 = E[u].begin(); it1 != E[u].end(); it1++)</span><br><span class="line">	&#123;</span><br><span class="line">		vt_dfs2(*it1);</span><br><span class="line">		<span class="keyword">if</span> (V[u].size() &gt; V[*it1].size()) cal1(u, u, *it1);</span><br><span class="line">		<span class="keyword">else</span> cal1(u, *it1, u), V[u].swap(V[*it1]);</span><br><span class="line">		<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it2 = V[*it1].begin(); it2 != V[*it1].end(); it2++)</span><br><span class="line">			V[u].push_back(*it2);</span><br><span class="line">		rt[u] = merge(rt[u], rt[*it1]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">work1</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vt_build(u);</span><br><span class="line">	Vt.clear();</span><br><span class="line">	vt_dfs1(u);</span><br><span class="line">	vt_init();</span><br><span class="line">	vt_dfs2(u);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x &amp; -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bit_add1</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!x) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = x; i &lt;= n; i += lowbit(i))</span><br><span class="line">		sum1[i] += y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bit_ask1</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = x; i; i -= lowbit(i))</span><br><span class="line">		tmp += sum1[i];</span><br><span class="line">	<span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bit_add2</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!x) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = x; i &lt;= n; i += lowbit(i))</span><br><span class="line">		sum2[i] += y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bit_ask2</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = x; i; i -= lowbit(i))</span><br><span class="line">		tmp += sum2[i];</span><br><span class="line">	<span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">work2</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		ans += bit_ask2(dfn[s[*it]]);</span><br><span class="line">		<span class="keyword">int</span> now = jump2(t[*it], get_dis(t[*it], u) - k);</span><br><span class="line">		<span class="keyword">if</span> (now)</span><br><span class="line">			bit_add2(dfn[now], <span class="number">1</span>), bit_add2(dfn[now] + siz[now], <span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now = jump2(t[*it], get_dis(t[*it], u) - k);</span><br><span class="line">		<span class="keyword">if</span> (now)</span><br><span class="line">			bit_add2(dfn[now], <span class="number">-1</span>), bit_add2(dfn[now] + siz[now], <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> fa)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = head[u]; i; i = edge[i].nxt)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> to = edge[i].to;</span><br><span class="line">		<span class="keyword">if</span> (to != fa)</span><br><span class="line">			dfs2(to, u);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">		ans += bit_ask1(dfn[s[*it]]), ans += bit_ask1(dfn[t[*it]]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; :: iterator it = Ve[u].begin(); it != Ve[u].end(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		bit_add1(dfn[h1[*it]], <span class="number">1</span>), bit_add1(dfn[h1[*it]] + siz[h1[*it]], <span class="number">-1</span>);</span><br><span class="line">		bit_add1(dfn[h2[*it]], <span class="number">1</span>), bit_add1(dfn[h2[*it]] + siz[h2[*it]], <span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	work1(u);</span><br><span class="line">	work2(u);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;n, &amp;m, &amp;k);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> x, y;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">		add(x, y), add(y, x);</span><br><span class="line">	&#125;</span><br><span class="line">	dfs1(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">	init();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;s[i], &amp;t[i]);</span><br><span class="line">		<span class="keyword">if</span> (dfn[s[i]] &gt; dfn[t[i]]) swap(s[i], t[i]);</span><br><span class="line">		<span class="keyword">if</span> (get_dis(s[i], t[i]) &lt; k) m--, i--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> l = lca(s[i], t[i]);</span><br><span class="line">		Ve[l].push_back(i);</span><br><span class="line">		h1[i] = s[i], h2[i] = t[i];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">19</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">			<span class="keyword">if</span> (((dep[s[i]] - dep[l]) - k) &amp; (<span class="number">1</span> &lt;&lt; j)) h1[i] = anc[h1[i]][j];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">19</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">			<span class="keyword">if</span> (((dep[t[i]] - dep[l]) - k) &amp; (<span class="number">1</span> &lt;&lt; j)) h2[i] = anc[h2[i]][j];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		sort(Ve[i].begin(), Ve[i].end(), [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)&#123;<span class="keyword">return</span> dfn[s[x]] &lt; dfn[s[y]];&#125;);</span><br><span class="line">	dfs2(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld"</span>, ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"># 题解</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/11/CF908H%20%E3%80%90New%20Year%20and%20Boolean%20Bridges%E3%80%91%20%E9%A2%98%E8%A7%A3/" rel="prev" title="CF908H 【New Year and Boolean Bridges】 题解">
+      <i class="fa fa-chevron-left"></i> CF908H 【New Year and Boolean Bridges】 题解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/19/CF750H%20%E3%80%90New%20Year%20and%20Snowy%20Grid%E3%80%91%20%E9%A2%98%E8%A7%A3/" rel="next" title="CF750H 【New Year and Snowy Grid】 题解">
+      CF750H 【New Year and Snowy Grid】 题解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sys.</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sys.</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+        loader: {
+          load: ['[tex]/mhchem']
+        },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

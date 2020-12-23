@@ -142,7 +142,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/04/%E6%B4%9B%E8%B0%B7%20P6690%20%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/30/CF720F%20%E3%80%90Array%20Covering%E3%80%91%20%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -156,145 +156,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/04/%E6%B4%9B%E8%B0%B7%20P6690%20%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">洛谷 P6690 一次函数 题解</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-08-04 21:35:37 / Modified: 21:42:50" itemprop="dateCreated datePublished" datetime="2020-08-04T21:35:37+08:00">2020-08-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>给你 $n$ 个一次函数 $f_i(x) = a_ix + b_i$。</p>
-<p>我们从中选出 $k$ 个函数 $g_i(x)$ （$1\leq i \leq k$），定义集合 $H$ 为 $g_i$ 的若干次幂的乘积模 $x^2$ 的值所构成的集合。即：</p>
-<script type="math/tex; mode=display">H=\{ax + b\ |\ 0 \leq a, b < p, \prod_{i=1}^k g_i(x)^j\bmod x^2=ax+b \}</script><p>其中 $j$ 是任意非负整数且对于每个 $i$ 可以有不同的 $j$。</p>
-<p>需要注意的是，$1$ 始终在集合 $H$ 中而非 $0$，即使 $k = 0$ 也是如此。</p>
-<p>给定 $A, B$，求出所有满足 $Ax+B\in H$ 的集合 $H$ 的 $k$ 的最小值。</p>
-<p>所有运算均在 ${}\bmod p$ 意义下进行。</p>
-<p>$2\leq p\leq 10^9$，保证 $p$ 为质数，$1\leq n \leq 5 \times 10^3$，$0\leq a_i, A &lt; p$，$1\leq b_i, B &lt; p$。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/04/%E6%B4%9B%E8%B0%B7%20P6690%20%E4%B8%80%E6%AC%A1%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/26/%E5%AD%90%E4%B8%B2%E5%91%A8%E6%9C%9F%E6%9F%A5%E8%AF%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sys.">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="sys.'s blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/26/%E5%AD%90%E4%B8%B2%E5%91%A8%E6%9C%9F%E6%9F%A5%E8%AF%A2/" class="post-title-link" itemprop="url">子串周期查询</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-26 20:54:15 / Modified: 21:07:38" itemprop="dateCreated datePublished" datetime="2020-03-26T20:54:15+08:00">2020-03-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="子串周期查询"><a href="#子串周期查询" class="headerlink" title="子串周期查询"></a>子串周期查询</h2><p>本文介绍了字符串结构相关的若干性质与能够在 $O(n\log n)$ 预处理，$O(\log n)$ 询问子串所有周期的算法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/26/%E5%AD%90%E4%B8%B2%E5%91%A8%E6%9C%9F%E6%9F%A5%E8%AF%A2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/13/CF623E%20%E3%80%90Transforming%20Sequence%E3%80%91%20%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sys.">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="sys.'s blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/13/CF623E%20%E3%80%90Transforming%20Sequence%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF623E 【Transforming Sequence】 题解</a>
+            <a href="/2020/11/30/CF720F%20%E3%80%90Array%20Covering%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF720F 【Array Covering】 题解</a>
         </h1>
 
         <div class="post-meta">
@@ -304,14 +166,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-03-13 23:30:09" itemprop="dateCreated datePublished" datetime="2020-03-13T23:30:09+08:00">2020-03-13</time>
+              <time title="Created: 2020-11-30 18:14:09" itemprop="dateCreated datePublished" datetime="2020-11-30T18:14:09+08:00">2020-11-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-14 01:15:20" itemprop="dateModified" datetime="2020-03-14T01:15:20+08:00">2020-03-14</time>
+                <time title="Modified: 2020-12-23 18:28:43" itemprop="dateModified" datetime="2020-12-23T18:28:43+08:00">2020-12-23</time>
               </span>
 
           
@@ -325,12 +187,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>对于一个整数序列 $\{a_1, a_2, \ldots, a_n\}$，我们定义它的变换为 $\{b_1, b_2, \ldots, b_n\}$，其中 $b_i = a_1 | a_2 | \ldots | a_i$，其中 $|$ 表示二进制按位或运算。</p>
-<p>现在求有多少个长为 $n$ 的，满足 $1\leq a_i \leq 2^k - 1$ 的序列 $a$，使得它的变换 $b$ 是<strong>严格单调递增</strong>的，对 $10^9+7$ 取模。</p>
-<p>$1\leq n \leq 10^{18}$，$1\leq k \leq 3 \times 10^4$。</p>
+          <p>给定一个长度为 $n$ 的序列 $a$。</p>
+<p>你需要选出 $k$ 个不同的子序列 $[l_i, r_i]$，使得它们的并为 $[1, n]$，求子序列和的最大值。</p>
+<p>$n \leq 10^5$，$k \leq \frac {n(n+1)}2$。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/13/CF623E%20%E3%80%90Transforming%20Sequence%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+              <a class="btn" href="/2020/11/30/CF720F%20%E3%80%90Array%20Covering%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -354,7 +216,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/CF1299D%20%E3%80%90Around%20the%20world%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/CF865E%20%E3%80%90Hex%20Dyslexia%E3%80%91%20%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -368,7 +230,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/10/CF1299D%20%E3%80%90Around%20the%20world%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF1299D 【Around the world】 题解</a>
+            <a href="/2020/11/04/CF865E%20%E3%80%90Hex%20Dyslexia%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF865E 【Hex Dyslexia】 题解</a>
         </h1>
 
         <div class="post-meta">
@@ -378,14 +240,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-02-10 13:43:25" itemprop="dateCreated datePublished" datetime="2020-02-10T13:43:25+08:00">2020-02-10</time>
+              <time title="Created: 2020-11-04 15:23:41" itemprop="dateCreated datePublished" datetime="2020-11-04T15:23:41+08:00">2020-11-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-21 13:28:32" itemprop="dateModified" datetime="2020-02-21T13:28:32+08:00">2020-02-21</time>
+                <time title="Modified: 2020-12-23 18:26:58" itemprop="dateModified" datetime="2020-12-23T18:26:58+08:00">2020-12-23</time>
               </span>
 
           
@@ -399,11 +261,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>给定一个无向图，保证和 $1$ 号点相连的没有点数大于 $3$ 的环，求和 $1$ 号点相连所有边的有多少种割边方式使得割完后的图不存在一条从 $1$ 出发 $1$ 结束的路径异或和为 $0$（至少有一条边走过了奇数次的情况中）。</p>
-<p>$n, m\leq 10^5$，$w\leq 31$。 </p>
+          <p>给定一个十六进制数，已知他是两个数 $a, b$ 的差，且 $a$ 在十六进制下的数位经过重新排列可以得到 $b$ 的十六进制表示。</p>
+<p>求最小的 $b$。</p>
+<p>输入长度 $\leq 14$。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/10/CF1299D%20%E3%80%90Around%20the%20world%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+              <a class="btn" href="/2020/11/04/CF865E%20%E3%80%90Hex%20Dyslexia%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -427,7 +290,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/WC2016-%E8%AE%BA%E6%88%98%E6%8D%86%E7%AB%B9%E7%AB%BF%20%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/31/CF573D%20%E3%80%90Bear%20and%20Cavalry%E3%80%91%20%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -441,7 +304,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/24/WC2016-%E8%AE%BA%E6%88%98%E6%8D%86%E7%AB%B9%E7%AB%BF%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">[WC2016]论战捆竹竿 题解</a>
+            <a href="/2020/10/31/CF573D%20%E3%80%90Bear%20and%20Cavalry%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF573D 【Bear and Cavalry】 题解</a>
         </h1>
 
         <div class="post-meta">
@@ -451,14 +314,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-10-24 22:17:23" itemprop="dateCreated datePublished" datetime="2019-10-24T22:17:23+08:00">2019-10-24</time>
+              <time title="Created: 2020-10-31 10:56:08" itemprop="dateCreated datePublished" datetime="2020-10-31T10:56:08+08:00">2020-10-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-21 19:39:06" itemprop="dateModified" datetime="2020-02-21T19:39:06+08:00">2020-02-21</time>
+                <time title="Modified: 2020-12-23 18:25:17" itemprop="dateModified" datetime="2020-12-23T18:25:17+08:00">2020-12-23</time>
               </span>
 
           
@@ -472,11 +335,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>给定一个字符串，每次可以往后拼接原串的一个 $\text{border}$，求长度小于等于 $w$ 有多少种长度可以被拼出。</p>
-<p>$n\leq 5 \times 10^5$，$w\leq 10^{18}$。</p>
+          <p>有 $n$ 个人和 $n$ 匹马，第 $i$ 个人对应第 $i$ 匹马。第 $i$ 个人能力值 $w_i$，第 $i$ 匹马能力值 $h_i$，第 $i$ 个人骑第 $j$ 匹马的能力值为 $w_i\times h_j$，整个军队的总能力值为每个人能力值的和。</p>
+<p>有一个要求：每个人都不能骑自己对应的马。</p>
+<p>让你制定骑马方案，使得整个军队的总能力值最大。</p>
+<p>现在有 $q$ 个操作，每次给出 $a,b$，交换 $a$ 和 $b$ 对应的马。每次操作后你都需要输出最大的总能力值。</p>
+<p>$n\leq 3\times 10^4$，$q \leq 10^4$。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/24/WC2016-%E8%AE%BA%E6%88%98%E6%8D%86%E7%AB%B9%E7%AB%BF%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+              <a class="btn" href="/2020/10/31/CF573D%20%E3%80%90Bear%20and%20Cavalry%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -500,7 +366,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%20%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/30/CF1178H%20%E3%80%90Stock%20Exchange%E3%80%91%20%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -514,7 +380,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/23/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%20%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">莫比乌斯反演 总结</a>
+            <a href="/2020/10/30/CF1178H%20%E3%80%90Stock%20Exchange%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF1178H 【Stock Exchange】 题解</a>
         </h1>
 
         <div class="post-meta">
@@ -524,14 +390,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-23 22:57:51" itemprop="dateCreated datePublished" datetime="2019-04-23T22:57:51+08:00">2019-04-23</time>
+              <time title="Created: 2020-10-30 20:51:39" itemprop="dateCreated datePublished" datetime="2020-10-30T20:51:39+08:00">2020-10-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-21 19:03:38" itemprop="dateModified" datetime="2020-02-21T19:03:38+08:00">2020-02-21</time>
+                <time title="Modified: 2020-12-23 18:22:44" itemprop="dateModified" datetime="2020-12-23T18:22:44+08:00">2020-12-23</time>
               </span>
 
           
@@ -545,10 +411,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>迪利克雷卷积、莫比乌斯反演、数论分块。</p>
+          <p>股票交易所里有 $2n$ 种股票，每种股票有两个属性 $a_i,b_i$，在时刻 $t\ge 0$，第 $i$ 种股票的价格为 $a_i*\lfloor t\rfloor+b_i$。</p>
+<p>每个时刻可以进行任意次股票交易，在时刻 $t$ 时能够把股票 $i$ 换成股票 $j$ 当且仅当股票 $i$ 在时刻 $t$ 的价格不小于股票 $j$ 在时刻 $t$ 的价格。</p>
+<p>现在你手上有 $1$ 到 $n$ 号股票各一张，现在要求的是把这些股票换成 $n+1$ 到 $2n$ 号股票各一张的最早时刻，以及在最早换完股票前提下的最少交易次数。</p>
+<p>$1\le n\le 2200,0\le a_i,b_i\le 10^9$。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/23/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%20%E6%80%BB%E7%BB%93/#more" rel="contents">
+              <a class="btn" href="/2020/10/30/CF1178H%20%E3%80%90Stock%20Exchange%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -572,7 +441,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/CF1146D%20%E3%80%90Frog%20Jumping%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/29/CF331E2%20%E3%80%90Deja%20Vu%E3%80%91%20%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -586,7 +455,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/22/CF1146D%20%E3%80%90Frog%20Jumping%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF1146D 【Frog Jumping】 题解</a>
+            <a href="/2020/10/29/CF331E2%20%E3%80%90Deja%20Vu%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF331E2 【Deja Vu】 题解</a>
         </h1>
 
         <div class="post-meta">
@@ -596,14 +465,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-04-22 19:32:00" itemprop="dateCreated datePublished" datetime="2019-04-22T19:32:00+08:00">2019-04-22</time>
+              <time title="Created: 2020-10-29 17:29:57" itemprop="dateCreated datePublished" datetime="2020-10-29T17:29:57+08:00">2020-10-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-21 19:20:38" itemprop="dateModified" datetime="2020-02-21T19:20:38+08:00">2020-02-21</time>
+                <time title="Modified: 2020-12-23 18:17:35" itemprop="dateModified" datetime="2020-12-23T18:17:35+08:00">2020-12-23</time>
               </span>
 
           
@@ -617,12 +486,399 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>给定 $a, b$，$f(x)$ 表示从 $0$ 开始，每次可以向右走 $b$ 步或向左走 $a$ 步，不能走出 $[0,x]$，能够到达的点数。</p>
-<p>求 $\sum_{i=0}^m f(i)$。</p>
-<p>$1\leq m \leq 10^9$，$1\leq a, b\leq 10^5$。</p>
+          <p>给定一张无重边自环的有向图，图中每条边上有一个顶点序列（可以为空）。</p>
+<p>对于一条路径 $A_1, A_2,\ldots , A_p$，我们将路径上的边上写的顶点序列依次连接起来，可以得到一个顶点序列$ B_1, B_2,\ldots, B_q$。</p>
+<p>如果 $A$ 和 $B$ 是相同的，我们称路径 $A$ 是好的。</p>
+<p>对于 $1 \leq i \leq 2n$，求出有多少条长度为 $i$ 的好的路径，对 $10^9 + 7$ 取模。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/22/CF1146D%20%E3%80%90Frog%20Jumping%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+              <a class="btn" href="/2020/10/29/CF331E2%20%E3%80%90Deja%20Vu%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/CF1091G%20%E3%80%90New%20Year%20and%20the%20Factorisation%20Collaboration%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/28/CF1091G%20%E3%80%90New%20Year%20and%20the%20Factorisation%20Collaboration%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF1091G 【New Year and the Factorisation Collaboration】 题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-28 17:29:49" itemprop="dateCreated datePublished" datetime="2020-10-28T17:29:49+08:00">2020-10-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 18:15:24" itemprop="dateModified" datetime="2020-12-23T18:15:24+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>给定 $n$（$21\leq n \leq 2^{1024}$），求 $n$ 的质因数。保证 $n$ 的所有质因数均为 $4x+3$ （$x$ 为自然数）的形式且至多由 $10$ 个质因数相乘得到。</p>
+<p>IO 交互提供了高精度计算。</p>
+<p><code>+ x y</code> 给定 $x, y$（$0\leq x &lt; n$），返回 $(x+y)\bmod n$。</p>
+<p><code>- x y</code> 给定 $x, y$（$0\leq x &lt; n$），返回 $(x-y)\bmod n$。</p>
+<p><code>* x y</code> 给定 $x, y$（$0\leq x &lt; n$），返回 $(x\cdot y)\bmod n$。</p>
+<p><code>/ x y</code> 给定 $x, y$（$0\leq x &lt; n$），返回 $(x\cdot y^{-1})\bmod n$。假如 $y, n$ 不互质，返回 <code>-1</code>。</p>
+<p><code>sqrt x</code> 给定 $x$（$0\leq x &lt; n$），返回 $y$（$0\leq y &lt; n$）满足 $y^2\bmod n=x$，若不存在返回 <code>-1</code>。</p>
+<p><code>^ x y</code> 给定 $x, y$（$0\leq x &lt; n$），返回 $(x^y)\bmod n$。</p>
+<p>你至多可以使用 $100$ 次交互库。运算花费时间表如下：</p>
+<p><code>+ x y</code> 至多 1 ms。</p>
+<p><code>- x y</code> — 至多 1 ms。</p>
+<p><code>* x y</code> — 至多 1 ms。</p>
+<p><code>/ x y</code> — 至多 350 ms。</p>
+<p><code>sqrt x</code> — 至多 80 ms。</p>
+<p><code>^ x y</code> — 至多 350 ms。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/28/CF1091G%20%E3%80%90New%20Year%20and%20the%20Factorisation%20Collaboration%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/26/CF765G%20%E3%80%90Math,%20math%20everywhere%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/26/CF765G%20%E3%80%90Math,%20math%20everywhere%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF765G 【Math, math everywhere】 题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-26 22:10:23" itemprop="dateCreated datePublished" datetime="2020-10-26T22:10:23+08:00">2020-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 18:13:44" itemprop="dateModified" datetime="2020-12-23T18:13:44+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>给定 $N$ 的因式分解形式 $\prod_{i=1}^np_i^{\alpha_i}$ 和一个长为 $m$ 的字符串 $s$。</p>
+<p>求 $k$ 的个数，使得 $0\leq k&lt;N$ 且</p>
+<script type="math/tex; mode=display">\gcd(k+i,N)=1 \text{  if and only if  }s_i=1</script><p>模 $10^9+7$。</p>
+<p>$m \leq 40$，$n\leq 5\times 10^5$，$p_i, \alpha_i \leq 10^9$。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/26/CF765G%20%E3%80%90Math,%20math%20everywhere%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/23/CF756E%20%E3%80%90Byteland%20coins%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/23/CF756E%20%E3%80%90Byteland%20coins%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF756E 【Byteland coins】 题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-23 11:46:16" itemprop="dateCreated datePublished" datetime="2020-10-23T11:46:16+08:00">2020-10-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 18:12:00" itemprop="dateModified" datetime="2020-12-23T18:12:00+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>你现在有 $n$ 种金币，第 $i$ 种金币的面额是 $\prod_{j=1}^{i-1} a_j$，有 $b_i$ 枚。保证对于一个相同的 $x$，面值为 $x$ 的金币不会超过 $20$ 种。</p>
+<p>求凑出总面值为 $m$ 的方案数，模 $10^9+7$。</p>
+<p>$m \leq 10^{10000}$，$n, \sum b_i \leq 3\times 10^5$，$1\leq a \leq 10^9$。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/23/CF756E%20%E3%80%90Byteland%20coins%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/22/CF1097E%20%E3%80%90Egor%20and%20an%20RPG%20game%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/22/CF1097E%20%E3%80%90Egor%20and%20an%20RPG%20game%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF1097E 【Egor and an RPG game】 题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-22 11:41:14" itemprop="dateCreated datePublished" datetime="2020-10-22T11:41:14+08:00">2020-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 18:01:50" itemprop="dateModified" datetime="2020-12-23T18:01:50+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>设 $f(n)$ 表示满足所有长度为 $n$ 的排列都能被划分成 $k$ 个不相交的单调上升 / 单调下降子序列的 $k$ 的最小值。</p>
+<p>多组数据，给定长为 $n$ 的排列，输出一种单调序列个数不超过 $f(n)$ 的划分方案。</p>
+<p>$\sum n \leq 10^5$。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/22/CF1097E%20%E3%80%90Egor%20and%20an%20RPG%20game%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/21/CF453E%20%E3%80%90Little%20Pony%20and%20Lord%20Tirek%E3%80%91%20%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sys.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sys.'s blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/21/CF453E%20%E3%80%90Little%20Pony%20and%20Lord%20Tirek%E3%80%91%20%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">CF453E 【Little Pony and Lord Tirek】 题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-21 10:45:04" itemprop="dateCreated datePublished" datetime="2020-10-21T10:45:04+08:00">2020-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-23 17:59:23" itemprop="dateModified" datetime="2020-12-23T17:59:23+08:00">2020-12-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>你有 $n$ 只小马（编号从 $1$ 到 $n$）。每只小马有三种属性。</p>
+<p>$s_i$：时间为 $0$ 时这只小马拥有的法力值。</p>
+<p>$m_i$：这只小马可以拥有的最大法力值。</p>
+<p>$r_i$：这只小马单位时间内回复的法力值。</p>
+<p>提雷克会给出 $m$ 条指令，每一条都可以被描述为 $3$ 个整数：$t_i, l_i, r_i$。表示在时间为 $t_i$ 时，提雷克会从区间 $[l_i,r_i]$ 的小马中吸取魔力，指令保证 $t$ 升序，计算每一条指令之后提雷克可以吸取多少点魔力。</p>
+<p>$n, m, s_i, m_i, r_i\leq 10^5$，$t_i \leq 10^9$。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/21/CF453E%20%E3%80%90Little%20Pony%20and%20Lord%20Tirek%E3%80%91%20%E9%A2%98%E8%A7%A3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -645,6 +901,9 @@
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -709,7 +968,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
